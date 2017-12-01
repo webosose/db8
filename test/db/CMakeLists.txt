@@ -68,6 +68,7 @@ add_executable(test_db_core ${DB_TEST_SOURCES} ${DB_BACKEND_WRAPPER_SOURCES_CPP}
 target_link_libraries(test_db_core
                       mojocore
                       mojodb
+                      atomic
                       ${DB_BACKEND_LIB}
 )
 install(PROGRAMS ${CMAKE_BINARY_DIR}/test/db/test_db_core
@@ -92,6 +93,7 @@ add_executable(test_db_performance ${DB_PERF_TEST_SOURCES} ${DB_BACKEND_WRAPPER_
 target_link_libraries(test_db_performance
                       mojocore
                       mojodb
+                      atomic
                       ${DB_BACKEND_LIB}
 )
 install(PROGRAMS ${CMAKE_BINARY_DIR}/test/db/test_db_performance
@@ -110,6 +112,7 @@ target_link_libraries(test_db_stress
                       mojocore
                       mojodb
                       mojoluna
+                      atomic
                       ${DB_BACKEND_LIB}
 )
 install(PROGRAMS ${CMAKE_BINARY_DIR}/test/db/test_db_stress

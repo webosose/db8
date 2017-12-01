@@ -23,6 +23,7 @@ target_link_libraries(${PROJECT_NAME}
 	${Boost_LIBRARIES}
 	${DB_BACKEND_LIB}
 	perfutils
+	atomic
 )
 
 install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
@@ -36,6 +37,7 @@ target_link_libraries(generator
 	${Boost_LIBRARIES}
 	${DB_BACKEND_LIB}
 	perfutils
+	atomic
 )
 install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/generator
         DESTINATION ${WEBOS_INSTALL_LIBDIR}/${CMAKE_PROJECT_NAME}/tests
