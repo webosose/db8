@@ -1,0 +1,4 @@
+Scripts for DB8 testing:
+
+Remove private app data from db when app uninstall
+This script will test application private data add/remove to db using luna-send.

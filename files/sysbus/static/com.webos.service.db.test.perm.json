@@ -1,0 +1,3 @@
+{
+    "com.webos.db8.test.*": ["database.internal", "database.test", "devices"]
+}

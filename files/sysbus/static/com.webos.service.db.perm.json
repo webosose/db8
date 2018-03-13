@@ -1,0 +1,6 @@
+{
+    "com.palm.db": ["activities.manage", "settings", "devices"],
+    "com.palm.tempdb": ["activities.manage", "settings", "devices"],
+    "com.webos.mediadb": ["activities.manage", "settings", "devices"],
+    "com.webos.epgdb": ["activities.manage", "settings", "devices"]
+}

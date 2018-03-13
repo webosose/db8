@@ -1,0 +1,47 @@
+# Copyright (c) 2014-2018 LG Electronics, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+
+project(gtest_sandwich CXX)
+
+include_directories(${WEBOS_GTEST_INCLUDES})
+
+add_definitions(-Wall -Wno-deprecated -pthread --std=c++0x)
+
+foreach(filename ${DB_BACKEND_WRAPPER_SOURCES})
+    set(DB_BACKEND_WRAPPER_SOURCES_CPP ${DB_BACKEND_WRAPPER_SOURCES_CPP} "${CMAKE_SOURCE_DIR}/${filename}")
+endforeach ()
+
+
+include_directories(../../src/storage-sandwich)
+
+add_executable(${PROJECT_NAME}
+               Runner.cpp
+               SandwichPool.cpp
+               ${DB_BACKEND_WRAPPER_SOURCES_CPP})
+
+target_link_libraries(${PROJECT_NAME}
+                      mojocore
+                      mojodb
+                      ${DB_BACKEND_LIB})
+
+target_link_libraries(${PROJECT_NAME} ${WEBOS_GTEST_LIBRARIES})
+
+add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
+
+install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
+        DESTINATION ${WEBOS_INSTALL_LIBDIR}/${CMAKE_PROJECT_NAME}/tests
+        PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_EXECUTE GROUP_READ)

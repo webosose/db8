@@ -1,0 +1,6 @@
+{
+ "database.test": {
+    "description": "Access to database test APIs",
+    "public": false
+  }
+}

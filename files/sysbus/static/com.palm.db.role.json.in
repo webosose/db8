@@ -1,0 +1,23 @@
+{
+    "exeName":"@WEBOS_INSTALL_SBINDIR@/mojodb-luna",
+    "type": "regular",
+    "allowedNames": ["com.palm.db","com.palm.tempdb","com.webos.mediadb","com.webos.epgdb"],
+    "permissions": [
+        {
+            "service":"com.palm.db",
+            "outbound":["com.palm.service.backup","com.palm.systemmanager","com.palm.activitymanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice"]
+        },
+        {
+            "service":"com.palm.tempdb",
+            "outbound":["com.palm.activitymanager","com.palm.systemmanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice"]
+        },
+        {
+            "service":"com.webos.mediadb",
+            "outbound":["com.palm.activitymanager","com.palm.systemmanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice"]
+        },
+        {
+            "service":"com.webos.epgdb",
+            "outbound":["com.palm.activitymanager","com.palm.systemmanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice"]
+        }
+    ]
+}

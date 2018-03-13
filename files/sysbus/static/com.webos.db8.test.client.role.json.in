@@ -1,0 +1,11 @@
+{
+    "exeName":"@WEBOS_INSTALL_LIBDIR@/@CMAKE_PROJECT_NAME@/tests/gtest_dbclient",
+    "type": "regular",
+    "allowedNames": ["com.webos.db8.test.client"],
+    "permissions": [
+        {
+            "service":"com.webos.db8.test.client",
+            "outbound":["com.palm.db"]
+        }
+    ]
+}

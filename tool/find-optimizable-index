@@ -1,0 +1,71 @@
+#!/usr/bin/env python
+
+# Copyright(c) 2015 by LG Electronics Inc.
+#
+# All rights reserved. No part of this work may be reproduced, stored in a
+# retrieval system, or transmitted by any means without prior written
+# permission of LG Electronics Inc.
+
+import argparse
+import json
+import sys
+import copy
+import os
+
+def main():
+    parser = argparse.ArgumentParser(description=
+        """Find optimizable kind in input, and write optimized kind.
+        If input is 'kind.json', two json files will be created
+        'kind.json.optimized' and 'kind.json.result'.
+        If stdin is used as input, result and optimized kind will
+        be shown in stdout.""",
+        usage=""" find-optimizable-index -h input
+        find-optimizable-index kind.json
+        cat kind.json | find-optimizable-index""")
+    parser.add_argument('input', help='JSON file contains kind definition')
+
+    try:
+        if not sys.stdin.isatty():
+            return optimize_kind(json.loads("".join(sys.stdin.readlines())), sys.stdout, sys.stdout)
+        args = parser.parse_args()
+        with open(args.input) as f, open(os.path.basename(args.input) + '.optimized', 'w') as f_out, open(os.path.basename(args.input) + '.result', 'w') as f_result:
+            optimize_kind(json.load(f), f_out, f_result)
+    except Exception as e:
+        print >> sys.stderr, "error:", e
+        parser.print_help()
+
+def optimize_kind(json_kind, out_file, result_file):
+    """
+    json_kind -- dict object contains json of kind as input
+    out_file -- file for writing optimized kind
+    result_path -- file for writing optimization result
+    """
+    bylen = {}
+    for index in json_kind["indexes"]:
+        key = len(index["props"])
+        if key not in bylen:
+            bylen[key] = [index]
+        else:
+            bylen[key].append(index)
+
+    json_kind_new = copy.deepcopy(json_kind)
+
+    for key in sorted(bylen.keys())[:-1]:
+        for index in bylen[key]:
+            prop_list = [it["name"] for it in index["props"]]
+            for index_longer in bylen[key + 1]:
+                if can_optimize_index(prop_list, index_longer):
+                    print >> result_file, "optimizable:", index["name"], "into", index_longer["name"]
+                    print >> result_file, " ", json.dumps(index)
+                    print >> result_file, " ", json.dumps(index_longer)
+                    json_kind_new["indexes"] = [it for it in json_kind_new["indexes"] if it["name"] != index["name"]]
+
+    print >> out_file, json.dumps(json_kind_new, indent=2, sort_keys=True)
+
+def can_optimize_index(prop_list, index_longer):
+    prop_list_longer = [it["name"] for it in index_longer["props"]]
+    prop_list_longer = prop_list_longer[:len(prop_list)]
+    return prop_list == prop_list_longer
+
+if __name__ == '__main__':
+    main()

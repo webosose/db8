@@ -1,0 +1,3 @@
+{
+    "database.test": ["com.webos.db8.test.lunaservice/*"]
+}

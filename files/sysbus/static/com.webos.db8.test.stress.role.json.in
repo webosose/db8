@@ -1,0 +1,11 @@
+{
+    "exeName":"@WEBOS_INSTALL_LIBDIR@/@CMAKE_PROJECT_NAME@/tests/test_db_stress",
+    "type": "regular",
+    "allowedNames": ["com.webos.db8.test.stress*"],
+    "permissions": [
+        {
+            "service":"com.webos.db8.test.stress*",
+            "outbound":["com.palm.db"]
+        }
+    ]
+}

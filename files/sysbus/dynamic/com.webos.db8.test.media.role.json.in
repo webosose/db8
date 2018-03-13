@@ -1,0 +1,12 @@
+{
+    "exeName":"@WEBOS_INSTALL_LIBDIR@/@CMAKE_PROJECT_NAME@/tests/gtest_db_media",
+    "type": "regular",
+    "allowedNames": ["com.webos.db8.test.media"],
+    "permissions": [
+        {
+            "service":"com.webos.db8.test.media",
+            "outbound":["com.webos.service.attachedstoragemanager"]
+        }
+    ]
+}
+

@@ -1,0 +1,17 @@
+{
+    "exeName":"@WEBOS_INSTALL_LIBDIR@/@CMAKE_PROJECT_NAME@/tests/test_luna_service",
+    "type": "regular",
+    "allowedNames": ["com.webos.db8.test.lunaservice", "com.webos.db8.test.lunaservice.client"],
+    "permissions": [
+        {
+            "service":"com.webos.db8.test.lunaservice",
+            "outbound":[]
+        },
+        {
+            "service":"com.webos.db8.test.lunaservice.client",
+            "outbound":["com.webos.db8.test.lunaservice"]
+        }
+    ]
+}
+
+
