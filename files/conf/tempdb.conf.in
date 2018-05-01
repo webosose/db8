@@ -25,7 +25,7 @@
                 ],
 		"loadStepSize" : 173,
                 "purgeWindow": 0,
-                "canProfile" : @WANT_PROFILING@,
+                "canProfile" : @WANT_PROFILING@
 	},
 	"bdb" : {
 		"cacheSize": 3145728,
