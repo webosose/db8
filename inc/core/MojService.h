@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2019 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -99,12 +99,6 @@ public:
 		MojErr addMethods(const Method* methods);
 		MojErr addMethods(const SchemaMethod* methods);
 		virtual MojErr invoke(Callback method, MojServiceMessage* msg, MojObject& payload);
-
-        // Deprecated methods. Still used by FileCache
-        MojErr addMethods(const Method* methods, bool)
-            __attribute__((deprecated("No public/private bus any more. Use addMethods(const Method*) instead")));
-        MojErr addMethods(const SchemaMethod* methods, bool)
-            __attribute__((deprecated("No public/private bus any more. Use addMethods(const SchemaMethod*) instead")));
 
 		CallbackMap m_callbackMap;
 	};

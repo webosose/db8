@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2019 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -134,9 +134,4 @@ void MojLunaMessage::releaseMessage()
 {
 	if (m_msg)
 		LSMessageUnref(m_msg);
-}
-
-bool MojLunaMessage::isPublic() const
-{
-    return LSMessageIsPublic(reinterpret_cast<MojLunaService*>(m_service)->m_service, m_msg);
 }
