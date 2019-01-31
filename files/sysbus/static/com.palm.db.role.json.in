@@ -5,19 +5,19 @@
     "permissions": [
         {
             "service":"com.palm.db",
-            "outbound":["com.palm.service.backup","com.palm.systemmanager","com.palm.activitymanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice"]
+            "outbound":["com.webos.service.activitymanager.client","com.palm.service.backup","com.palm.systemmanager","com.palm.activitymanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice"]
         },
         {
             "service":"com.palm.tempdb",
-            "outbound":["com.palm.activitymanager","com.palm.systemmanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice"]
+            "outbound":["com.webos.service.activitymanager.client","com.palm.activitymanager","com.palm.systemmanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice"]
         },
         {
             "service":"com.webos.mediadb",
-            "outbound":["com.palm.activitymanager","com.palm.systemmanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice"]
+            "outbound":["com.webos.service.activitymanager.client","com.palm.activitymanager","com.palm.systemmanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice"]
         },
         {
             "service":"com.webos.epgdb",
-            "outbound":["com.palm.activitymanager","com.palm.systemmanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice"]
+            "outbound":["com.webos.service.activitymanager.client","com.palm.activitymanager","com.palm.systemmanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice"]
         }
     ]
 }
