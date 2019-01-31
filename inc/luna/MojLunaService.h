@@ -28,7 +28,7 @@ class MojLunaService : public MojService, public MojSignalHandler
 {
 public:
     typedef MojSignal<> IdleTimeoutSignal;
-    MojLunaService(bool bus = false/*keep flag to avoid activitymanager compilation error*/, MojMessageDispatcher* queue = NULL);
+    MojLunaService(bool allowPublicMethods = false/*keep flag to avoid activitymanager compilation error*/, MojMessageDispatcher* queue = NULL);
 	virtual ~MojLunaService();
 
 	virtual MojErr open(const MojChar* serviceName);
@@ -41,8 +41,9 @@ public:
     virtual MojErr createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, const char *proxyRequester);
 	MojErr attach(GMainLoop* loop);
 	void connectIdleTimeoutSignal(IdleTimeoutSignal::SlotRef slot);
+	LSHandle* getService();
     void setIdleTimeout(MojUInt32 timeout);
-    LSHandle* getHandle() { return m_handle; }
+    LSHandle* getHandle() { return m_service; }
     void sendSignal(const MojChar* category, const MojChar* method, const MojChar* signalBody);
 
 private:
@@ -74,7 +75,7 @@ private:
 	static void idleTimeoutCallback(void* userdata);
 
 	void Statistic(LSMessage* msg);
-	LSHandle* m_handle; // Deprecated. TODO: remove after moving all clients to ACG
+	LSHandle* m_service;
 	GMainLoop* m_loop;
 	MojUInt32 m_idleTimeout;
 	IdleTimeoutSignal m_idleTimeoutSignal;

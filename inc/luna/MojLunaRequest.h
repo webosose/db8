@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2019 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,14 +26,7 @@ class MojLunaRequest : public MojServiceRequest
 {
 public:
 	MojLunaRequest(MojService* service);
-    MojLunaRequest(MojService* service, const MojString& requester);
-    MojLunaRequest(MojService* service, bool onPublic);
-        __attribute__((deprecated("No public/private bus any more. Use MojLunaRequest(MojService*) instead")));
-    MojLunaRequest(MojService* service, bool onPublic, const MojString& requester)
-        __attribute__((deprecated("No public/private bus any more. Use MojLunaRequest(MojService*, const MojString&) instead")));
-
-    bool onPublic() const
-        __attribute__((deprecated("No public/private bus any more")));
+        MojLunaRequest(MojService* service, const MojString& requester);
 	bool isProxyRequest() const { return !m_requester.empty(); }
 	bool cancelled() const { return m_cancelled; }
 	const MojChar* payload() const { return m_writer.json(); }
@@ -49,7 +42,6 @@ private:
 
 	MojString m_requester;
 
-	bool m_onPublic;
 	bool m_cancelled;
 };
 

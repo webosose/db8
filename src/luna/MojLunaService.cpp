@@ -26,14 +26,14 @@
 
 const MojChar* const MojLunaService::UriScheme = _T("palm");
 
-MojLunaService::MojLunaService(bool publicBus/*TODO:keep flag to avoid activitymanager compilation error*/, MojMessageDispatcher* queue)
+MojLunaService::MojLunaService(bool allowPublicMethods/*TODO:keep flag to avoid activitymanager compilation error*/, MojMessageDispatcher* queue)
 : MojService(queue),
-  m_handle(NULL),
+  m_service(NULL),
   m_loop(NULL),
   m_idleTimeout(0),
   m_idleTimeoutSignal(this)
 {
-    (void)publicBus; // to avoid coverity issue, "unused variable"
+    (void)allowPublicMethods; // to avoid coverity issue, "unused variable"
 }
 
 MojLunaService::~MojLunaService()
@@ -55,13 +55,13 @@ MojErr MojLunaService::open(const MojChar* serviceName)
     }
 #endif
 
-    bool retVal;
-    MojLunaErr lserr;
+	bool retVal;
+	MojLunaErr lserr;
 
     // create service handle
-    retVal = LSRegister(serviceName, &m_handle, lserr);
+    retVal = LSRegister(serviceName, &m_service, lserr);
     MojLsErrCheck(retVal, lserr);
-    retVal = LSSubscriptionSetCancelFunction(m_handle, handleCancel, this, lserr);
+    retVal = LSSubscriptionSetCancelFunction(m_service, handleCancel, this, lserr);
     MojLsErrCheck(retVal, lserr);
 
     return MojErrNone;
@@ -71,18 +71,19 @@ MojErr MojLunaService::close()
 {
     LOG_TRACE("Entering function %s", __FUNCTION__);
 
-    MojErr err = MojErrNone;
-    MojErr errClose = MojService::close();
-    MojErrAccumulate(err, errClose);
+	MojErr err = MojErrNone;
+	MojErr errClose = MojService::close();
+	MojErrAccumulate(err, errClose);
 
-    // destroy service handle
-    MojLunaErr lserr;
-    bool retVal;
-    retVal = LSUnregister(m_handle, lserr);
-    m_handle = NULL;
-    MojLsErrAccumulate(err, retVal, lserr);
-
-    return err;
+	// destroy service handle
+	MojLunaErr lserr;
+	bool retVal;
+	if (m_service) {
+		retVal = LSUnregister(m_service, lserr);
+		m_service = NULL;
+		MojLsErrAccumulate(err, retVal, lserr);
+	}
+	return err;
 }
 
 // Note: this is a blocking interface exclusively for unit tests.
@@ -125,13 +126,13 @@ MojErr MojLunaService::addCategory(const MojChar* name, CategoryHandler* handler
 	MojAllocCheck(cat.get());
 	LSMethod* lsMethods = const_cast<LSMethod*>(cat->m_methods.begin());
 
-    MojLunaErr lserr;
+	MojLunaErr lserr;
     bool retVal;
-    MojAssert(m_handle);
-    retVal = LSRegisterCategory(m_handle, name, lsMethods, NULL, NULL, lserr);
-    MojLsErrCheck(retVal, lserr);
-    retVal = LSCategorySetData(m_handle, name, cat.get(), lserr);
-    MojLsErrCheck(retVal, lserr);
+    	MojAssert(m_service);
+    	retVal = LSRegisterCategory(m_service, name, lsMethods, NULL, NULL, lserr);
+    	MojLsErrCheck(retVal, lserr);
+        retVal = LSCategorySetData(m_service, name, cat.get(), lserr);
+        MojLsErrCheck(retVal, lserr);
 
 	MojString categoryStr;
 	err = categoryStr.assign(name);
@@ -170,27 +171,47 @@ MojErr MojLunaService::createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut
 
 MojErr MojLunaService::createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, const MojString& proxyRequester)
 {
-	return createRequest(reqOut, proxyRequester);
+    LOG_TRACE("Entering function %s", __FUNCTION__);
+
+	reqOut.reset(new MojLunaRequest(this, proxyRequester));
+	MojAllocCheck(reqOut.get());
+
+	return MojErrNone;
 }
+
 
 MojErr MojLunaService::createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, const char *proxyRequester)
 {
-	return createRequest(reqOut, proxyRequester);
+    LOG_TRACE("Entering function %s", __FUNCTION__);
+
+    MojString proxyRequesterString;
+    MojErr err = proxyRequesterString.assign(proxyRequester);
+    MojErrCheck(err);
+
+    reqOut.reset(new MojLunaRequest(this, proxyRequesterString));
+    MojAllocCheck(reqOut.get());
+
+    return MojErrNone;
 }
 
 MojErr MojLunaService::attach(GMainLoop* loop)
 {
-    MojAssert(loop);
+	MojAssert(loop);
     LOG_TRACE("Entering function %s", __FUNCTION__);
 
-    MojLunaErr lserr;
-    bool retVal;
-    MojAssert(m_handle);
-    retVal= LSGmainAttach(m_handle, loop, lserr);
-    MojLsErrCheck(retVal, lserr);
-    m_loop = loop;
+	MojLunaErr lserr;
+	bool retVal;
+	MojAssert(m_service);
+	retVal= LSGmainAttach(m_service, loop, lserr);
+	MojLsErrCheck(retVal, lserr);
+	m_loop = loop;
 
-    return MojErrNone;
+	return MojErrNone;
+}
+
+LSHandle* MojLunaService::getService()
+{
+	return m_service;
 }
 
 void MojLunaService::setIdleTimeout(MojUInt32 timeout)
@@ -203,11 +224,12 @@ void MojLunaService::connectIdleTimeoutSignal(IdleTimeoutSignal::SlotRef slot)
     m_idleTimeoutSignal.connect(slot);
 }
 
+
 MojErr MojLunaService::sendImpl(MojServiceRequest* req, const MojChar* service, const MojChar* method, Token& tokenOut)
 {
     LOG_TRACE("Entering function %s", __FUNCTION__);
 	MojAssert(req && service && method);
-	MojAssert(m_handle);
+	MojAssert(m_service);
 	MojAssertMutexLocked(m_mutex);
 
 	MojLunaRequest* lunaReq = static_cast<MojLunaRequest*>(req);
@@ -247,7 +269,7 @@ MojErr MojLunaService::cancelImpl(MojServiceRequest* req)
 {
     LOG_TRACE("Entering function %s", __FUNCTION__);
 	MojAssert(req);
-	MojAssert(m_handle);
+	MojAssert(m_service);
 	MojAssertMutexUnlocked(m_mutex);
 
 	MojLunaRequest* lunaReq = static_cast<MojLunaRequest*>(req);
