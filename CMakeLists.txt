@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2018 LG Electronics, Inc.
+# Copyright (c) 2012-2019 LG Electronics, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -174,13 +174,11 @@ if(BUILD_LS2)
     install (FILES files/scripts/errorOpenTempDb.bash DESTINATION ${WEBOS_INSTALL_LIBDIR}/${CMAKE_PROJECT_NAME}/bin PERMISSIONS OWNER_EXECUTE OWNER_READ)
     install (FILES files/scripts/errorNoSpace.bash DESTINATION ${WEBOS_INSTALL_LIBDIR}/${CMAKE_PROJECT_NAME}/bin PERMISSIONS OWNER_EXECUTE OWNER_READ)
     install (FILES files/scripts/errorOpenEpgDb.bash DESTINATION ${WEBOS_INSTALL_LIBDIR}/${CMAKE_PROJECT_NAME}/bin PERMISSIONS OWNER_EXECUTE OWNER_READ)
-    install (FILES files/scripts/registerFault.bash DESTINATION ${WEBOS_INSTALL_LIBDIR}/${CMAKE_PROJECT_NAME}/bin PERMISSIONS OWNER_EXECUTE OWNER_READ)
 
     # configuration files per database
     webos_build_configured_file(files/conf/maindb.conf WEBOS_SYSCONFDIR db8)
     webos_build_configured_file(files/conf/mediadb.conf WEBOS_SYSCONFDIR db8)
     webos_build_configured_file(files/conf/tempdb.conf WEBOS_SYSCONFDIR db8)
-    webos_build_configured_file(files/conf/epgdb.conf WEBOS_SYSCONFDIR db8)
 
     # extras
     install(FILES src/db-luna/backup-com.palm.db DESTINATION ${WEBOS_INSTALL_WEBOS_SYSCONFDIR}/backup)
@@ -190,8 +188,6 @@ if(BUILD_LS2)
     install(FILES src/db-luna/activity-com.palm.tempdb.purge.json DESTINATION ${WEBOS_INSTALL_WEBOS_SYSCONFDIR}/activities/com.palm.tempdb)
     install(FILES src/db-luna/activity-com.webos.mediadb.purge.json DESTINATION ${WEBOS_INSTALL_WEBOS_SYSCONFDIR}/activities/com.webos.mediadb)
     install(FILES src/db-luna/activity-com.webos.mediadb.space.json DESTINATION ${WEBOS_INSTALL_WEBOS_SYSCONFDIR}/activities/com.webos.mediadb)
-    install(FILES src/db-luna/activity-com.webos.epgdb.purge.json DESTINATION ${WEBOS_INSTALL_WEBOS_SYSCONFDIR}/activities/com.webos.epgdb)
-    install(FILES src/db-luna/activity-com.webos.epgdb.space.json DESTINATION ${WEBOS_INSTALL_WEBOS_SYSCONFDIR}/activities/com.webos.epgdb)
 endif() # BUILD_LS2
 
 install(DIRECTORY inc/ DESTINATION ${WEBOS_INSTALL_INCLUDEDIR}/mojodb/)
