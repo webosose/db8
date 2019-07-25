@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2019 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -140,7 +140,6 @@ public:
 	static const MojChar* const ServiceName;
     static const MojChar* const MediaServiceName;
 	static const MojChar* const TempServiceName;
-	static const MojChar* const EpgServiceName;
     static const MojChar* const ASMServiceName;
     static const MojChar* const ASMListDeviceMethod;
     static const MojChar* const ASMRegisterDeviceStatusMethod;

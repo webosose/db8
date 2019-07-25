@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2019 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -160,16 +160,6 @@ MojErr MojDbLunaServiceApp::open()
 	MojErrCheck(err);
 	err = m_internalHandler->configure(m_conf, dbOpenFailed);
 	MojErrCheck(err);
-
-    if ( m_serviceName.compare(MojDbServiceDefs::EpgServiceName) == 0 ) {
-        // TODO: Rationalize this code, not hard-coded here.
-        static LSSignal signals[] = {
-            { "resetEpgdb" },
-            { }
-        };
-        err = m_mainService.service().addSignalCategory("/com/webos/epgdb", signals);
-        MojErrCheck(err);
-    }
 
     err = m_internalHandler->subscribe();
     MojErrCheck(err);

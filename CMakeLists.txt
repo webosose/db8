@@ -173,7 +173,6 @@ if(BUILD_LS2)
     install (FILES files/scripts/errorOpenMediaDb.bash DESTINATION ${WEBOS_INSTALL_LIBDIR}/${CMAKE_PROJECT_NAME}/bin PERMISSIONS OWNER_EXECUTE OWNER_READ)
     install (FILES files/scripts/errorOpenTempDb.bash DESTINATION ${WEBOS_INSTALL_LIBDIR}/${CMAKE_PROJECT_NAME}/bin PERMISSIONS OWNER_EXECUTE OWNER_READ)
     install (FILES files/scripts/errorNoSpace.bash DESTINATION ${WEBOS_INSTALL_LIBDIR}/${CMAKE_PROJECT_NAME}/bin PERMISSIONS OWNER_EXECUTE OWNER_READ)
-    install (FILES files/scripts/errorOpenEpgDb.bash DESTINATION ${WEBOS_INSTALL_LIBDIR}/${CMAKE_PROJECT_NAME}/bin PERMISSIONS OWNER_EXECUTE OWNER_READ)
 
     # configuration files per database
     webos_build_configured_file(files/conf/maindb.conf WEBOS_SYSCONFDIR db8)

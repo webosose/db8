@@ -1,4 +1,4 @@
-// Copyright (c) 2013-2018 LG Electronics, Inc.
+// Copyright (c) 2013-2019 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -71,15 +71,6 @@ MojErr MojDbLunaServiceDb::open(MojGmainReactor& reactor, MojDbEnv* env,
 
         err = recoverDb(env, dir, conf);
         MojErrCheck(err);
-
-        //if success broadcast signal when service is epgdb
-        if (strcmp(serviceName, MojDbServiceDefs::EpgServiceName) == 0) {
-            MojString str, category, method;
-            category.assign(_T("/com/webos/epgdb/"));
-            method.assign(_T("resetEpgdb"));
-            str.assign(_T("{\"resetEpgdb\" : true}"));
-            m_service.sendSignal(category, method, str);
-        }
     }
 
     return err;
