@@ -1,5 +1,25 @@
 {
-    "com.palm.db": ["activities.manage", "settings", "devices"],
-    "com.palm.tempdb": ["activities.manage", "settings", "devices"],
-    "com.webos.mediadb": ["activities.manage", "settings", "devices"]
+    "com.palm.db": [
+        "activity.operation",
+        "activity.wakeup",
+        "activity.query",
+        "settings.management",
+        "settings.devutility",
+        "settings.query" ],
+
+    "com.palm.tempdb": [
+        "activity.operation",
+        "activity.wakeup",
+        "activity.query",
+        "settings.management",
+        "settings.devutility",
+        "settings.query" ],
+
+    "com.webos.mediadb": [
+        "activity.operation",
+        "activity.wakeup",
+        "activity.query",
+        "settings.management",
+        "settings.devutility",
+        "settings.query" ]
 }
