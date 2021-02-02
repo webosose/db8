@@ -1,6 +1,7 @@
 {
     "exeName":"@WEBOS_INSTALL_LIBDIR@/@CMAKE_PROJECT_NAME@/tests/gtest_dbclient",
     "type": "regular",
+    "trustLevel": "oem",
     "allowedNames": ["com.webos.db8.test.client"],
     "permissions": [
         {

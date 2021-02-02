@@ -12,7 +12,6 @@
   "mediadatabase.operation":["oem"],
   "mediadatabase.profiling":["oem"],
   "mediadatabase.management":["oem"],
-  
   "keymgrdatabase.operation":["oem"],
   "keymgrdatabase.profiling":["oem"],
   "keymgrdatabase.management":["oem"]
