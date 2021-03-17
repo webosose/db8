@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -174,7 +174,7 @@ MojErr MojDbSearchCursor::init(const MojDbQuery& query)
     MojObject obj;
     err = m_query.toObject(obj);
     MojErrCheck(err);
-    m_cacheQuery.fromObject(obj);
+    (void) m_cacheQuery.fromObject(obj);
 
 	err = m_query.order(_T(""));
 	MojErrCheck(err);

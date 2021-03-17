@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -390,8 +390,8 @@ MojErr MojFileFromString(const MojChar* path, const MojChar* data, bool sync)
 	MojFile file;
 	MojErr err = file.open(path, MOJ_O_WRONLY | MOJ_O_CREAT | MOJ_O_TRUNC, MOJ_S_IRUSR | MOJ_S_IWUSR);
 	MojErrCheck(err);
-	MojSize size;
-	err = file.writeString(data, size);
+	MojSize sizeOut = 0;
+	err = file.writeString(data, sizeOut);
 	MojErrCheck(err);
     if (sync) {
         err = file.sync();

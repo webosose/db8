@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -600,7 +600,7 @@ MojErr MojDbKindEngine::getByOwner (const MojString& owner, MojVector<MojDbKind*
 
        if(kind->owner().compare(owner) == 0)
        {
-           vect.push(kind);
+           (void) vect.push(kind);
        }
     }
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2019 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -75,7 +75,7 @@ MojErr MojDbLunaServiceApp::configure(const MojObject& conf)
 
     m_conf = conf;
 
-    conf.get(MojDbStorageEngine::engineFactory()->name(), m_engineConf);
+    (void) conf.get(MojDbStorageEngine::engineFactory()->name(), m_engineConf);
     err = m_env->configure(m_engineConf);
     MojErrCheck(err);
     err = m_mainService.db().configure(conf);

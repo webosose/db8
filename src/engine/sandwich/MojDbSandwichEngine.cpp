@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -206,17 +206,21 @@ MojErr MojDbSandwichEngine::open(const MojChar* path, MojDbEnv* env)
     m_bottom.options = MojDbSandwichEngine::getOpenOptions();
     m_bottom.writeOptions = MojDbSandwichEngine::getWriteOptions();
     m_bottom.readOptions = MojDbSandwichEngine::getReadOptions();
-    leveldb::Status status = m_bottom.Open(path);
 
-    if (status.IsCorruption()) {    // database corrupted
-        // try restore database
-        // AHTUNG! After restore database can lost some data!
-        status = leveldb::RepairDB(path, MojDbSandwichEngine::getOpenOptions());
-        MojLdbErrCheck(status, _T("db corrupted"));
-        status = m_bottom.Open(path);  // database restored, re-open
+    if (path)
+    {
+        leveldb::Status status = m_bottom.Open(path);
+
+        if (status.IsCorruption()) {    // database corrupted
+            // try restore database
+            // AHTUNG! After restore database can lost some data!
+            status = leveldb::RepairDB(path, MojDbSandwichEngine::getOpenOptions());
+            MojLdbErrCheck(status, _T("db corrupted"));
+            status = m_bottom.Open(path);  // database restored, re-open
+        }
+
+        MojLdbErrCheck(status, _T("db_create/db_open"));
     }
-
-    MojLdbErrCheck(status, _T("db_create/db_open"));
 
     // open seqence db
     m_seqDb.reset(new MojDbSandwichDatabase(m_db.use(MojEnvSeqDbName)));

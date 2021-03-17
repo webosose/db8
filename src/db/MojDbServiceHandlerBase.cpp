@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@ MojErr MojDbServiceHandlerBase::invoke(Callback method, MojServiceMessage* msg, 
                 MojString faultRegisterScriptPath;
                 MojErr err = m_db.getConf().getRequired("faultRegisterScriptPath", faultRegisterScriptPath);
                 MojErrCatchAll(err);
-                system(faultRegisterScriptPath.data());
+                (void) system(faultRegisterScriptPath.data());
             } else if (MojErrNone == alertErr && bytesAvailable == 0l && MojDbSpaceAlert::AlertLevelHigh == alertLevel) {
                 LOG_CRITICAL(MSGID_DB_SERVICE_ERROR, 0, "db: IO error due to no space; shutting down");
                 m_reactor.stop();

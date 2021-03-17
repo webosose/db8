@@ -1,4 +1,4 @@
-// Copyright (c) 2013-2018 LG Electronics, Inc.
+// Copyright (c) 2013-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -70,7 +70,7 @@ MojErr MojDbMediaLinkManager::createLink(MojDbShardInfo& shardInfo)
 
     LOG_DEBUG("[db_shardLinkManager] create link %s", linkPath.data());
 
-    MojUnlink(linkPath.data());
+    (void) MojUnlink(linkPath.data());
 
     err = MojSymlink(shardInfo.deviceUri.data(), linkPath.data());
     MojErrCheck(err);

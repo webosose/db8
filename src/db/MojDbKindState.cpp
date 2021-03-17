@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -380,7 +380,7 @@ MojErr MojDbKindState::readObj(const MojChar* key, MojObject& val, MojDbStorageD
 		// TODO: this bugging ( on calling getObj)
 		err = oldItem->toObject(obj, *m_kindEngine, false);
 		MojErrCheck(err);
-		obj.get(key, val);
+		(void) obj.get(key, val);
 	}
 	return MojErrNone;
 }

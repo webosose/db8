@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ public:
         MojErr validate(const MojObject& val, const MojObject& parent, Result& resOut) const
         {
                 MojString string_val;
-                val.stringValue(string_val);
+                (void) val.stringValue(string_val);
 
                 if (!boost::regex_match (string_val.data(),m_regexp))
                 {
@@ -142,7 +142,7 @@ MojErr MojSchema::SchemaRule::fromObject(const MojObject& obj)
                         if (m_optional == required) {
 
 				MojString kind;
-				obj.stringValue(kind);
+				(void) obj.stringValue(kind);
 
 				LOG_ERROR (MSGID_DB_KIND_ENGINE_ERROR, 3,
 					   PMLOGKFV("required key : ", "%d", required),

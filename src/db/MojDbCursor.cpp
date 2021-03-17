@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,9 +24,9 @@ MojDbCursor::MojDbCursor()
 : m_ownTxn(true),
   m_lastErr(MojErrNone),
   m_kindEngine(NULL),
+  m_vmode(false),
 #ifdef LMDB_ENGINE_SUPPORT
-  m_dbIndex(NULL),
-  m_vmode(false)
+  m_dbIndex(NULL)
 #else
   m_dbIndex(NULL)
 #endif

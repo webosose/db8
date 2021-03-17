@@ -1,4 +1,4 @@
-// Copyright (c) 2013-2018 LG Electronics, Inc.
+// Copyright (c) 2013-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ MojDbLevelContainerIterator::MojDbLevelContainerIterator (std::map<std::string, 
 }
 
 MojDbLevelContainerIterator::MojDbLevelContainerIterator(iterator_t iterator, std::map<std::string, std::string>& database)
-    : m_container(database), m_it(iterator)
+    : m_container(database), m_it(iterator), m_start(false)
 {
 }
 

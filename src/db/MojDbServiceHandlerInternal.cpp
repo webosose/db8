@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -176,7 +176,7 @@ MojErr MojDbServiceHandlerInternal::handlePreBackup(MojServiceMessage* msg, MojO
 	err = payload.getRequired(MojDbServiceDefs::BytesKey, bytes);
 	MojErrCheck(err);
 	MojObject incrementalKey;
-	payload.get(MojDbServiceDefs::IncrementalKey, incrementalKey);
+	(void) payload.get(MojDbServiceDefs::IncrementalKey, incrementalKey);
 
 	MojTime curTime;
 	err = MojGetCurrentTime(curTime);
@@ -345,7 +345,7 @@ MojErr MojDbServiceHandlerInternal::requestLocale()
 
 	// register with the settings service for locale changes
 	MojString keys;
-	keys.assign(MojDbServiceDefs::LocaleKey);
+	(void) keys.assign(MojDbServiceDefs::LocaleKey);
 	MojObject localePayload;
 	MojErr err = localePayload.put(MojDbServiceDefs::KeysKey, keys);
 	MojErrCheck(err);
