@@ -455,9 +455,11 @@ void MojDbSearchCursor::searchThread_caller(void *arg, void *user_data)
     ObjectInfo* info = reinterpret_cast<ObjectInfo *>(arg);
     MojDbSearchCursor* thiz = reinterpret_cast<MojDbSearchCursor*>(user_data);
 
-    MojErr err = thiz->searchThread_callee(info);
     if (info)
+    {
+        MojErr err = thiz->searchThread_callee(info);
         delete info;
+    }
 }
 
 MojErr MojDbSearchCursor::searchThread_callee(const ObjectInfo* a_info)
