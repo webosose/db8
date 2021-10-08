@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -45,6 +45,8 @@ public:
 	virtual const MojChar* method() const = 0;
 	virtual const MojChar* senderAddress() const = 0;
 	virtual const MojChar* senderId() const= 0;
+	virtual const MojChar* senderExePath() const= 0;
+	virtual const MojChar* senderTrustLevel() const= 0;
 	virtual const MojChar* senderName() const;
 	virtual MojErr payload(MojObjectVisitor& visitor) const = 0;
 	virtual MojErr payload(MojObject& objOut) const = 0;

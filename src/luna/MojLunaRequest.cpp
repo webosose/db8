@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2019 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,4 +33,15 @@ MojLunaRequest::MojLunaRequest(MojService* service,
     MojAssert(service);
 }
 
-
+MojLunaRequest::MojLunaRequest(MojService* service,
+                               const MojString& originExe,
+                               const MojString& originId,
+                               const MojString& originName)
+: MojServiceRequest(service),
+  m_originExe(originExe),
+  m_originId(originId),
+  m_originName(originName),
+  m_cancelled(false)
+{
+    MojAssert(service);
+}

@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2019 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -37,14 +37,15 @@ public:
 	virtual MojErr addCategory(const MojChar* name, CategoryHandler* handler);
 	virtual MojErr addSignalCategory(const MojChar* name, LSSignal* signal);
 	virtual MojErr createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut);
-    virtual MojErr createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, const MojString& proxyRequester);
-    virtual MojErr createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, const char *proxyRequester);
+	virtual MojErr createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, const MojString& proxyRequester);
+	virtual MojErr createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, const char *proxyRequester);
+	virtual MojErr createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, const char *originExe, const char *originId, const char *originName);
 	MojErr attach(GMainLoop* loop);
 	void connectIdleTimeoutSignal(IdleTimeoutSignal::SlotRef slot);
 	LSHandle* getService();
-    void setIdleTimeout(MojUInt32 timeout);
-    LSHandle* getHandle() { return m_service; }
-    void sendSignal(const MojChar* category, const MojChar* method, const MojChar* signalBody);
+	void setIdleTimeout(MojUInt32 timeout);
+	LSHandle* getHandle() { return m_service; }
+	void sendSignal(const MojChar* category, const MojChar* method, const MojChar* signalBody);
 
 private:
 	friend class MojLunaMessage;
