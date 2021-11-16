@@ -37,7 +37,7 @@ static MojErr MojBase64DecodeImpl(const MojByte vals[], MojSize size, const MojC
 
 // Implementation of SuperFastHash from
 // http://www.azillionmonkeys.com/qed/hash.html
-MojSize MojHash (const void* p, MojSize len)
+uint32_t MojHash (const void* p, MojSize len)
 {
 	MojAssert(p || len == 0);
 	const MojByte* src = (const MojByte*) p;
@@ -83,7 +83,7 @@ MojSize MojHash (const void* p, MojSize len)
     return hash;
 }
 
-MojSize MojHash(const MojChar* str)
+uint32_t MojHash(const MojChar* str)
 {
 	return MojHash(str, MojStrLen(str) * sizeof(MojChar));
 }

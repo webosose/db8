@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -68,7 +68,7 @@ private:
 template<>
 struct MojHasher<MojDecimal>
 {
-	MojSize operator()(const MojDecimal& val)
+	uint32_t operator()(const MojDecimal& val)
 	{
 		MojInt64 rep = val.rep();
 		return MojHash(&rep, sizeof(rep));
