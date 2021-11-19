@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2019 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -194,6 +194,28 @@ MojErr MojLunaService::createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut
     return MojErrNone;
 }
 
+MojErr MojLunaService::createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, const char *originExe, const char *originId, const char *originName)
+{
+    LOG_TRACE("Entering function %s", __FUNCTION__);
+
+    MojString originExeString;
+    MojErr err = originExeString.assign(originExe);
+    MojErrCheck(err);
+
+    MojString originIdString;
+    err = originIdString.assign(originId);
+    MojErrCheck(err);
+
+    MojString originNameString;
+    err = originNameString.assign(originName);
+    MojErrCheck(err);
+
+    reqOut.reset(new MojLunaRequest(this, originExeString, originIdString, originNameString));
+    MojAllocCheck(reqOut.get());
+
+    return MojErrNone;
+}
+
 MojErr MojLunaService::attach(GMainLoop* loop)
 {
 	MojAssert(loop);
@@ -244,17 +266,35 @@ MojErr MojLunaService::sendImpl(MojServiceRequest* req, const MojChar* service, 
 	LSMessageToken lsToken;
 	LSHandle* handle = getHandle();
 	if (req->numRepliesExpected() > 1) {
+
+		// If proxy requester is present means this is an Call from Application
 		if (!lunaReq->isProxyRequest()) {
-			bool retVal = LSCall(handle, uri, json, &handleResponse, this, &lsToken, lserr);
-			MojLsErrCheck(retVal, lserr);
+
+			// If origin name is present means this is an Indirect luna call
+			if (!lunaReq->isOriginRequest()) {
+				bool retVal = LSCall(handle, uri, json, &handleResponse, this, &lsToken, lserr);
+				MojLsErrCheck(retVal, lserr);
+			}
+			else{  
+				bool retVal = LSCallProxy(handle, lunaReq->getOriginExe(), lunaReq->getOriginId(), lunaReq->getOriginName(), uri, json, &handleResponse, this, &lsToken, lserr);
+				MojLsErrCheck(retVal, lserr);
+			}
 		} else {
 			bool retVal = LSCallFromApplication(handle, uri, json, lunaReq->getRequester(), &handleResponse, this, &lsToken, lserr);
 			MojLsErrCheck(retVal, lserr);
 		}
 	} else {
 		if (!lunaReq->isProxyRequest()) {
-			bool retVal = LSCallOneReply(handle, uri, json, &handleResponse, this, &lsToken, lserr);
-			MojLsErrCheck(retVal, lserr);
+
+			// If origin name is present means this is an Indirect luna call
+			if (!lunaReq->isOriginRequest()) {
+				bool retVal = LSCallOneReply(handle, uri, json, &handleResponse, this, &lsToken, lserr);
+				MojLsErrCheck(retVal, lserr);
+			}
+			else{
+				bool retVal = LSCallProxyOneReply(handle, lunaReq->getOriginExe(), lunaReq->getOriginId(), lunaReq->getOriginName(), uri, json, &handleResponse, this, &lsToken, lserr);
+				MojLsErrCheck(retVal, lserr);
+			}
 		} else {
 			bool retVal = LSCallFromApplicationOneReply(handle, uri, json, lunaReq->getRequester(), &handleResponse, this, &lsToken, lserr);
 			MojLsErrCheck(retVal, lserr);

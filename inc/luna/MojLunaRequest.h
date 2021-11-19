@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2019 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,11 +26,16 @@ class MojLunaRequest : public MojServiceRequest
 {
 public:
 	MojLunaRequest(MojService* service);
-        MojLunaRequest(MojService* service, const MojString& requester);
+	MojLunaRequest(MojService* service, const MojString& requester);
+	MojLunaRequest(MojService* service, const MojString& originaExe, const MojString& originaId, const MojString& originaName);
 	bool isProxyRequest() const { return !m_requester.empty(); }
+	bool isOriginRequest() const { return !m_originName.empty(); }
 	bool cancelled() const { return m_cancelled; }
 	const MojChar* payload() const { return m_writer.json(); }
 	const MojChar* getRequester() const { return m_requester.data(); }
+	const MojChar* getOriginExe() const { return m_originExe.data(); }
+	const MojChar* getOriginId() const { return m_originId.data(); }
+	const MojChar* getOriginName() const { return m_originName.data(); }
 	virtual MojObjectVisitor& writer() { return m_writer; }
 
 private:
@@ -41,6 +46,10 @@ private:
 	MojJsonWriter m_writer;
 
 	MojString m_requester;
+
+	MojString m_originExe;
+	MojString m_originId;
+	MojString m_originName;
 
 	bool m_cancelled;
 };
