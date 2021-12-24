@@ -3,6 +3,7 @@
         "activity.operation",
         "activity.wakeup",
         "activity.query",
+        "database.management",
         "settings.management",
         "settings.devutility",
         "settings.query" ],
@@ -11,6 +12,7 @@
         "activity.operation",
         "activity.wakeup",
         "activity.query",
+        "tempdatabase.management",
         "settings.management",
         "settings.devutility",
         "settings.query" ],
@@ -19,6 +21,7 @@
         "activity.operation",
         "activity.wakeup",
         "activity.query",
+        "mediadatabase.management",
         "settings.management",
         "settings.devutility",
         "settings.query" ]

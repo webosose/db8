@@ -10,11 +10,11 @@
 },
 {
 "service":"com.palm.tempdb",
-"outbound":["com.palm.activitymanager","com.palm.systemmanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice", "com.webos.service.devicereset","com.webos.service.micomservice","com.webos.service.faultmanager", "com.palm.db"]
+"outbound":["com.palm.activitymanager","com.palm.systemmanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice", "com.webos.service.devicereset","com.webos.service.micomservice","com.webos.service.faultmanager", "com.palm.db", "com.palm.tempdb"]
 },
 {
 "service":"com.webos.mediadb",
-"outbound":["com.palm.activitymanager","com.palm.systemmanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice", "com.webos.service.devicereset","com.webos.service.micomservice","com.webos.service.faultmanager", "com.palm.db"]
+"outbound":["com.palm.activitymanager","com.palm.systemmanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice", "com.webos.service.devicereset","com.webos.service.micomservice","com.webos.service.faultmanager", "com.palm.db", "com.webos.mediadb"]
 },
 {
 "service":"com.webos.epgdb",
