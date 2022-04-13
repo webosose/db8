@@ -27,7 +27,7 @@
 class MojDbSearchCursor : public MojDbCursor
 {
 public:
-    MojDbSearchCursor() : m_limit(0), m_pos(nullptr), m_startPos(0), m_count(0){}
+    MojDbSearchCursor() : m_limit(0), m_pos(nullptr), m_startPos(0), m_count(0), m_collation(MojDbCollationInvalid), m_limitPos(nullptr){}
     MojDbSearchCursor(MojString locale);
     ~MojDbSearchCursor() override;
     MojErr close() override;
