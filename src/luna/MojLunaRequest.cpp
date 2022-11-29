@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@
 
 MojLunaRequest::MojLunaRequest(MojService* service)
 : MojServiceRequest(service),
-  m_onPublic(false),
   m_cancelled(false)
 {
 	MojAssert(service);
@@ -29,31 +28,20 @@ MojLunaRequest::MojLunaRequest(MojService* service,
                                const MojString& requester)
 : MojServiceRequest(service),
   m_requester(requester),
-  m_onPublic(false),
   m_cancelled(false)
 {
     MojAssert(service);
 }
 
-MojLunaRequest::MojLunaRequest(MojService* service, bool onPublic)
+MojLunaRequest::MojLunaRequest(MojService* service,
+                               const MojString& originExe,
+                               const MojString& originId,
+                               const MojString& originName)
 : MojServiceRequest(service),
-  m_onPublic(onPublic),
+  m_originExe(originExe),
+  m_originId(originId),
+  m_originName(originName),
   m_cancelled(false)
 {
-	MojAssert(service);
-}
-
-MojLunaRequest::MojLunaRequest(MojService* service, bool onPublic,
-	const MojString& requester)
-: MojServiceRequest(service),
-  m_requester(requester),
-  m_onPublic(onPublic),
-  m_cancelled(false)
-{
-	MojAssert(service);
-}
-
-bool MojLunaRequest::onPublic() const
-{
-    return m_onPublic;
+    MojAssert(service);
 }

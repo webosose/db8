@@ -1,23 +1,24 @@
 {
-    "exeName":"@WEBOS_INSTALL_SBINDIR@/mojodb-luna",
-    "type": "regular",
-    "allowedNames": ["com.palm.db","com.palm.tempdb","com.webos.mediadb","com.webos.epgdb"],
-    "permissions": [
-        {
-            "service":"com.palm.db",
-            "outbound":["com.palm.service.backup","com.palm.systemmanager","com.palm.activitymanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice"]
-        },
-        {
-            "service":"com.palm.tempdb",
-            "outbound":["com.palm.activitymanager","com.palm.systemmanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice"]
-        },
-        {
-            "service":"com.webos.mediadb",
-            "outbound":["com.palm.activitymanager","com.palm.systemmanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice"]
-        },
-        {
-            "service":"com.webos.epgdb",
-            "outbound":["com.palm.activitymanager","com.palm.systemmanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice"]
-        }
-    ]
+"exeName":"@WEBOS_INSTALL_SBINDIR@/mojodb-luna",
+"trustLevel": "oem",
+"type": "regular",
+"allowedNames": ["com.palm.db","com.palm.tempdb","com.webos.mediadb","com.webos.epgdb","com.webos.keymgrdb"],
+"permissions": [
+{
+"service":"com.palm.db",
+"outbound":["com.palm.service.backup","com.palm.systemmanager","com.palm.activitymanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice", "com.webos.service.devicereset","com.webos.service.micomservice","com.webos.service.faultmanager", "com.palm.db"]
+},
+{
+"service":"com.palm.tempdb",
+"outbound":["com.palm.activitymanager","com.palm.systemmanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice", "com.webos.service.devicereset","com.webos.service.micomservice","com.webos.service.faultmanager", "com.palm.db", "com.palm.tempdb"]
+},
+{
+"service":"com.webos.mediadb",
+"outbound":["com.palm.activitymanager","com.palm.systemmanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice", "com.webos.service.devicereset","com.webos.service.micomservice","com.webos.service.faultmanager", "com.palm.db", "com.webos.mediadb"]
+},
+{
+"service":"com.webos.epgdb",
+"outbound":["com.palm.activitymanager","com.palm.systemmanager", "com.webos.service.attachedstoragemanager", "com.webos.settingsservice","com.webos.service.devicereset","com.webos.service.micomservice","com.webos.service.faultmanager", "com.palm.db"]
+}
+]
 }

@@ -1,6 +1,18 @@
 {
- "database.test": {
-    "description": "Access to database test APIs",
-    "public": false
+  "allowedNames": ["com.palm.db","com.palm.tempdb","com.webos.mediadb","com.webos.epgdb", "com.webos.keymgrdb"],
+  "database.operation":["dev"],
+  "database.profiling":["dev"],
+  "database.management":["oem"],
+  "tempdatabase.operation":["dev"],
+  "tempdatabase.profiling":["dev"],
+  "tempdatabase.management":["oem"],
+  "epgdatabase.operation":["oem"],
+  "epgdatabase.profiling":["oem"],
+  "epgdatabase.management":["oem"],
+  "mediadatabase.operation":["oem"],
+  "mediadatabase.profiling":["oem"],
+  "mediadatabase.management":["oem"],
+  "keymgrdatabase.operation":["oem"],
+  "keymgrdatabase.profiling":["oem"],
+  "keymgrdatabase.management":["oem"]
   }
-}

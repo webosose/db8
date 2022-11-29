@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -197,7 +197,7 @@ MojErr MojDbServiceHandler::handleGetProfile(MojServiceMessage* msg, MojObject& 
     }
 
     MojObject query;
-    payload.get(MojDbServiceDefs::QueryKey, query);
+    (void) payload.get(MojDbServiceDefs::QueryKey, query);
 
     MojObject results;
 
@@ -212,7 +212,7 @@ MojErr MojDbServiceHandler::handleGetProfile(MojServiceMessage* msg, MojObject& 
     err = visitor.propName(MojDbServiceDefs::ResultsKey);
     MojErrCheck(err);
 
-    visitor.beginArray();
+    (void) visitor.beginArray();
 
     err = m_db.profileStats(application.data(), &visitor, req, query);
     MojErrCheck(err);
@@ -471,15 +471,15 @@ MojErr MojDbServiceHandler::handleMergePut(MojServiceMessage* msg, MojObject& pa
 
 MojErr MojDbServiceHandler::handlePurge(MojServiceMessage* msg, MojObject& payload, MojDbReq& req)
 {
-    LOG_TRACE("Entering function %s", __FUNCTION__);
+	LOG_TRACE("Entering function %s", __FUNCTION__);
 	MojAssert(msg);
 
 	MojInt64 window = -1;
-	payload.get(MojDbServiceDefs::WindowKey, window);
+	(void) payload.get(MojDbServiceDefs::WindowKey, window);
 
 	MojUInt32 count = 0;
 	MojErr err = m_db.purge(count, window, req);
-    LOG_DEBUG("[db_mojodb] PurgeComplete: Count: %d \n", count);
+	LOG_DEBUG("[db_mojodb] PurgeComplete: Count: %d \n", count);
 	MojErrCheck(err);
 	err = formatCount(msg, count);
 	MojErrCheck(err);

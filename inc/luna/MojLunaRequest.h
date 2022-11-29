@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,18 +26,16 @@ class MojLunaRequest : public MojServiceRequest
 {
 public:
 	MojLunaRequest(MojService* service);
-    MojLunaRequest(MojService* service, const MojString& requester);
-    MojLunaRequest(MojService* service, bool onPublic);
-        __attribute__((deprecated("No public/private bus any more. Use MojLunaRequest(MojService*) instead")));
-    MojLunaRequest(MojService* service, bool onPublic, const MojString& requester)
-        __attribute__((deprecated("No public/private bus any more. Use MojLunaRequest(MojService*, const MojString&) instead")));
-
-    bool onPublic() const
-        __attribute__((deprecated("No public/private bus any more")));
+	MojLunaRequest(MojService* service, const MojString& requester);
+	MojLunaRequest(MojService* service, const MojString& originaExe, const MojString& originaId, const MojString& originaName);
 	bool isProxyRequest() const { return !m_requester.empty(); }
+	bool isOriginRequest() const { return !m_originName.empty(); }
 	bool cancelled() const { return m_cancelled; }
 	const MojChar* payload() const { return m_writer.json(); }
 	const MojChar* getRequester() const { return m_requester.data(); }
+	const MojChar* getOriginExe() const { return m_originExe.data(); }
+	const MojChar* getOriginId() const { return m_originId.data(); }
+	const MojChar* getOriginName() const { return m_originName.data(); }
 	virtual MojObjectVisitor& writer() { return m_writer; }
 
 private:
@@ -49,7 +47,10 @@ private:
 
 	MojString m_requester;
 
-	bool m_onPublic;
+	MojString m_originExe;
+	MojString m_originId;
+	MojString m_originName;
+
 	bool m_cancelled;
 };
 

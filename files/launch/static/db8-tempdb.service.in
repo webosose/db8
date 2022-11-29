@@ -1,4 +1,4 @@
-# Copyright (c) 2014-2019 LG Electronics, Inc.
+# Copyright (c) 2019 LG Electronics, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,9 +14,17 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-description "Start/Stop all required db8 databases"
+# A userspace service that provides access to the openWebOS database
 
-start on (started db8-maindb and started db8-tempdb and started db8-mediadb)
-stop on (stopped db8-maindb and stopped db8-tempdb and stopped db8-mediadb)
+[Unit]
+Description=webos - "%n"
+Requires=ls-hubd.service db8-pre-config.service
+After=ls-hubd.service db8-pre-config.service
 
-#console output
+[Service]
+Type=simple
+OOMScoreAdjust=-900
+EnvironmentFile=-/var/systemd/system/env/db8-tempdb.env
+Environment=LD_PRELOAD=/usr/lib/libjemalloc_mt.so.0:/lib/libpthread.so.0
+ExecStart=/usr/sbin/mojodb-luna -c /etc/palm/db8/tempdb.conf
+Restart=on-failure

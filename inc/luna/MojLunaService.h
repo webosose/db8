@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,9 +28,7 @@ class MojLunaService : public MojService, public MojSignalHandler
 {
 public:
     typedef MojSignal<> IdleTimeoutSignal;
-    MojLunaService(bool allowPublicMethods, MojMessageDispatcher* queue = NULL)
-        __attribute__((deprecated("No public/private bus any more. Use MojLunaService(MojMessageDispatcher* = NULL) instead")));
-    MojLunaService(MojMessageDispatcher* queue = NULL);
+    MojLunaService(bool allowPublicMethods = false/*keep flag to avoid activitymanager compilation error*/, MojMessageDispatcher* queue = NULL);
 	virtual ~MojLunaService();
 
 	virtual MojErr open(const MojChar* serviceName);
@@ -39,21 +37,15 @@ public:
 	virtual MojErr addCategory(const MojChar* name, CategoryHandler* handler);
 	virtual MojErr addSignalCategory(const MojChar* name, LSSignal* signal);
 	virtual MojErr createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut);
-    virtual MojErr createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, const MojString& proxyRequester);
-    virtual MojErr createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, const char *proxyRequester);
-    virtual MojErr createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, bool onPublic)
-        __attribute__((deprecated("No public/private bus any more. Use createRequest(MojRefCountedPtr<MojServiceRequest>&) instead")));
-    virtual MojErr createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, bool onPublic, const MojString& proxyRequester)
-        __attribute__((deprecated("No public/private bus any more. Use createRequest(MojRefCountedPtr<MojServiceRequest>&, const MojString&) instead")));
-    virtual MojErr createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, bool onPublic, const char *proxyRequester)
-        __attribute__((deprecated("No public/private bus any more. Use createRequest(MojRefCountedPtr<MojServiceRequest>&, const char*) instead")));
+	virtual MojErr createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, const MojString& proxyRequester);
+	virtual MojErr createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, const char *proxyRequester);
+	virtual MojErr createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, const char *originExe, const char *originId, const char *originName);
 	MojErr attach(GMainLoop* loop);
 	void connectIdleTimeoutSignal(IdleTimeoutSignal::SlotRef slot);
-	LSPalmService* getService();
-        __attribute__((deprecated("LSPalmService is not supported anymore use LSHandle")));
-    void setIdleTimeout(MojUInt32 timeout);
-    LSHandle* getHandle() { return m_handle; }
-    void sendSignal(const MojChar* category, const MojChar* method, const MojChar* signalBody);
+	LSHandle* getService();
+	void setIdleTimeout(MojUInt32 timeout);
+	LSHandle* getHandle() { return m_service; }
+	void sendSignal(const MojChar* category, const MojChar* method, const MojChar* signalBody);
 
 private:
 	friend class MojLunaMessage;
@@ -84,11 +76,7 @@ private:
 	static void idleTimeoutCallback(void* userdata);
 
 	void Statistic(LSMessage* msg);
-	LSHandle* getHandle(bool onPublic); // Deprecated. TODO: remove after moving all clients to ACG
-        __attribute__((deprecated("No public/private bus any more. Use getHandle() instead")));
-	bool m_allowPublicMethods; // Deprecated. TODO: remove after moving all clients to ACG
-	LSPalmService* m_service;
-	LSHandle* m_handle; // Deprecated. TODO: remove after moving all clients to ACG
+	LSHandle* m_service;
 	GMainLoop* m_loop;
 	MojUInt32 m_idleTimeout;
 	IdleTimeoutSignal m_idleTimeoutSignal;

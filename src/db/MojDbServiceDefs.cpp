@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2019 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -135,7 +135,6 @@ const MojChar* const MojDbServiceDefs::InternalCategory = _T("/internal");
 const MojChar* const MojDbServiceDefs::ServiceName = _T("com.palm.db");
 const MojChar* const MojDbServiceDefs::TempServiceName = _T("com.palm.tempdb");
 const MojChar* const MojDbServiceDefs::MediaServiceName = _T("com.webos.mediadb");
-const MojChar* const MojDbServiceDefs::EpgServiceName = _T("com.webos.epgdb");
 const MojChar* const MojDbServiceDefs::ASMServiceName = _T("com.webos.service.attachedstoragemanager");
 const MojChar* const MojDbServiceDefs::ASMListDeviceMethod = _T("listDevices");
 const MojChar* const MojDbServiceDefs::ASMRegisterDeviceStatusMethod = _T("registerDeviceStatus");

@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -61,8 +61,8 @@ void MojQuickSort(T* array, MojSize numElems);
 bool MojFlagGet(MojUInt32 flags, MojUInt32 mask);
 void MojFlagSet(MojUInt32& flags, MojUInt32 mask, bool val);
 
-MojSize MojHash(const void* p, MojSize size);
-MojSize MojHash(const MojChar* str);
+uint32_t MojHash(const void* p, MojSize size);
+uint32_t MojHash(const MojChar* str);
 
 inline MojSize MojBase64EncodedLenMax(MojSize srcSize) { return ((srcSize + 2) / 3) * 4; }
 inline MojSize MojBase64DecodedSizeMax(MojSize encodedLen) { return ((encodedLen + 3) / 4) * 3; }

@@ -1,3 +1,17 @@
 {
-    "com.webos.db8.test.*": ["database.internal", "database.test", "devices"]
+    "com.webos.db8.test.*": [
+        "database.operation",
+        "database.profiling",
+        "database.management",
+        "tempdatabase.operation",
+        "tempdatabase.profiling",
+        "tempdatabase.management",
+        "epgdatabase.operation",
+        "epgdatabase.profiling",
+        "epgdatabase.management",
+        "mediadatabase.operation",
+        "mediadatabase.profiling",
+        "mediadatabase.management",
+        "database.test"
+    ]
 }

@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2018 LG Electronics, Inc.
+// Copyright (c) 2014-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ public :
 
     private:
         MojString m_kind;
-        MojUInt32 m_rev;
+        MojUInt32 m_rev = 0U;
         MojString m_query;
     };
 

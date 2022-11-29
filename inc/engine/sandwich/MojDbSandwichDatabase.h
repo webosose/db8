@@ -1,4 +1,4 @@
-// Copyright (c) 2013-2018 LG Electronics, Inc.
+// Copyright (c) 2013-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ class MojDbSandwichDatabase final : public MojDbStorageExtDatabase
 {
 public:
     MojDbSandwichDatabase(const MojDbSandwichEngine::BackendDb::Part& part) :
-        m_db(part)
+        m_db(part), m_engine(nullptr)
     {}
     ~MojDbSandwichDatabase();
 

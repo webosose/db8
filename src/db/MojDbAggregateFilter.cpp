@@ -1,4 +1,4 @@
-// Copyright (c) 2015-2018 LG Electronics, Inc.
+// Copyright (c) 2015-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 #include "core/MojLogDb8.h"
 #include "db/MojDb.h"
 
-MojDbAggregateFilter::MojDbAggregateFilter()
+MojDbAggregateFilter::MojDbAggregateFilter(): m_desc(false)
 {
 }
 
@@ -300,7 +300,7 @@ MojErr MojDbAggregateFilter::visit(MojObjectVisitor& visitor)
                 MojErrCheck(err);
             }
             if ((aggregateInfo.m_op & MojDbQuery::OpAvg) == MojDbQuery::OpAvg) {
-                aggregateObj.put(MojDbQuery::AvgKey, MojDecimal(aggregateInfo.m_avg));
+                err = aggregateObj.put(MojDbQuery::AvgKey, MojDecimal(aggregateInfo.m_avg));
                 MojErrCheck(err);
             }
             err = resultObj.put(propName, aggregateObj);

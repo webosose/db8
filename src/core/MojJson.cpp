@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -445,7 +445,7 @@ Redo:	switch (state()) {
 			break;
 
 		case StateEscapeUnicode:
-			if (MojIsHexDigit(c)) {
+			if (MojIsHexDigit(c) && (m_strPos <= 3U)) {
 				m_ucsChar += ((MojUInt32) hexDigit(c) << ((3 - m_strPos++) * 4));
 				if (m_strPos == 4) {
 					MojChar utfOut[3];

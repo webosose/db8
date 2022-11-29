@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -252,8 +252,8 @@ MojErr MojDb::dump(const MojChar* path, MojUInt32& countOut, bool incDel, MojDbR
 
 	// if we were given an incremental key, pull out the revs now
 	if (incrementalKey) {
-		incrementalKey->get(MojDbServiceDefs::RevKey, revParam);
-		incrementalKey->get(MojDbServiceDefs::DeletedRevKey, delRevParam);
+		(void) incrementalKey->get(MojDbServiceDefs::RevKey, revParam);
+		(void) incrementalKey->get(MojDbServiceDefs::DeletedRevKey, delRevParam);
 	}
 
     // if 'enableRootKind' flag is true, find subkinds from root
@@ -744,7 +744,7 @@ MojErr MojDb::handleBackupFull(const MojObject& revParam, const MojObject& delRe
 	MojErr err = keyStr.assign(keyName);
 	MojErrCheck(err);
 	MojObject incremental;
-	response.get(MojDbServiceDefs::IncrementalKey, incremental);
+	(void) response.get(MojDbServiceDefs::IncrementalKey, incremental);
 
 	err = response.put(MojDbServiceDefs::HasMoreKey, true);
 	MojErrCheck(err);
@@ -767,7 +767,7 @@ MojErr MojDb::insertIncrementalKey(MojObject& response, const MojChar* keyName, 
 
 	// get the incremental key if it already exists
 	MojObject incremental;
-	response.get(MojDbServiceDefs::IncrementalKey, incremental);
+	(void) response.get(MojDbServiceDefs::IncrementalKey, incremental);
 
 	MojErr err = incremental.put(keyName, curRev);
 	MojErrCheck(err);

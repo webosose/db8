@@ -1,6 +1,7 @@
 {
     "exeName":"@WEBOS_INSTALL_LIBDIR@/@CMAKE_PROJECT_NAME@/tests/test_luna_service",
     "type": "regular",
+    "trustLevel": "oem",
     "allowedNames": ["com.webos.db8.test.lunaservice", "com.webos.db8.test.lunaservice.client"],
     "permissions": [
         {

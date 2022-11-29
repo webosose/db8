@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -617,11 +617,12 @@ void MojDbQuery::init()
 {
     LOG_TRACE("Entering function %s", __FUNCTION__);
 
-	m_limit = LimitDefault;
-        m_immediateReturn = false;
-	m_desc = false;
-	m_forceIndex = NULL;
+    m_limit = LimitDefault;
+    m_immediateReturn = false;
+    m_desc = false;
+    m_forceIndex = NULL;
     m_ignoreInactiveShards = true;
+    m_kindEngine = NULL;
 }
 
 MojErr MojDbQuery::addClauses(WhereMap& map, const MojObject& array)

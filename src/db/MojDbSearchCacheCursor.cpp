@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -174,7 +174,7 @@ MojErr MojDbSearchCursor::init(const MojDbQuery& query)
     MojObject obj;
     err = m_query.toObject(obj);
     MojErrCheck(err);
-    m_cacheQuery.fromObject(obj);
+    (void) m_cacheQuery.fromObject(obj);
 
 	err = m_query.order(_T(""));
 	MojErrCheck(err);
@@ -455,9 +455,11 @@ void MojDbSearchCursor::searchThread_caller(void *arg, void *user_data)
     ObjectInfo* info = reinterpret_cast<ObjectInfo *>(arg);
     MojDbSearchCursor* thiz = reinterpret_cast<MojDbSearchCursor*>(user_data);
 
-    MojErr err = thiz->searchThread_callee(info);
     if (info)
+    {
+        MojErr err = thiz->searchThread_callee(info);
         delete info;
+    }
 }
 
 MojErr MojDbSearchCursor::searchThread_callee(const ObjectInfo* a_info)

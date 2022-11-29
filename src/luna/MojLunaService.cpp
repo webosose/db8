@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,24 +26,14 @@
 
 const MojChar* const MojLunaService::UriScheme = _T("palm");
 
-MojLunaService::MojLunaService(bool allowPublicMethods, MojMessageDispatcher* queue)
+MojLunaService::MojLunaService(bool allowPublicMethods/*TODO:keep flag to avoid activitymanager compilation error*/, MojMessageDispatcher* queue)
 : MojService(queue),
-  m_allowPublicMethods(allowPublicMethods),
   m_service(NULL),
   m_loop(NULL),
   m_idleTimeout(0),
   m_idleTimeoutSignal(this)
 {
-}
-
-MojLunaService::MojLunaService(MojMessageDispatcher* queue)
-: MojService(queue),
-  m_allowPublicMethods(false),
-  m_service(NULL),
-  m_loop(NULL),
-  m_idleTimeout(0),
-  m_idleTimeoutSignal(this)
-{
+    (void)allowPublicMethods; // to avoid coverity issue, "unused variable"
 }
 
 MojLunaService::~MojLunaService()
@@ -68,25 +58,13 @@ MojErr MojLunaService::open(const MojChar* serviceName)
 	bool retVal;
 	MojLunaErr lserr;
 
-	// create service handle
-	if (m_allowPublicMethods) {
-		retVal = LSRegisterPalmService(serviceName, &m_service, lserr);
-		MojLsErrCheck(retVal, lserr);
+    // create service handle
+    retVal = LSRegister(serviceName, &m_service, lserr);
+    MojLsErrCheck(retVal, lserr);
+    retVal = LSSubscriptionSetCancelFunction(m_service, handleCancel, this, lserr);
+    MojLsErrCheck(retVal, lserr);
 
-		LSHandle* handle = LSPalmServiceGetPublicConnection(m_service);
-		retVal = LSSubscriptionSetCancelFunction(handle, handleCancel, this, lserr);
-		MojLsErrCheck(retVal, lserr);
-
-		handle = LSPalmServiceGetPrivateConnection(m_service);
-		retVal = LSSubscriptionSetCancelFunction(handle, handleCancel, this, lserr);
-		MojLsErrCheck(retVal, lserr);
-	} else {
-		retVal = LSRegister(serviceName, &m_handle, lserr);
-		MojLsErrCheck(retVal, lserr);
-		retVal = LSSubscriptionSetCancelFunction(m_handle, handleCancel, this, lserr);
-		MojLsErrCheck(retVal, lserr);
-	}
-	return MojErrNone;
+    return MojErrNone;
 }
 
 MojErr MojLunaService::close()
@@ -101,13 +79,8 @@ MojErr MojLunaService::close()
 	MojLunaErr lserr;
 	bool retVal;
 	if (m_service) {
-		retVal = LSUnregisterPalmService(m_service, lserr);
+		retVal = LSUnregister(m_service, lserr);
 		m_service = NULL;
-		m_handle = NULL;
-		MojLsErrAccumulate(err, retVal, lserr);
-	} else if (m_handle) {
-		retVal = LSUnregister(m_handle, lserr);
-		m_handle = NULL;
 		MojLsErrAccumulate(err, retVal, lserr);
 	}
 	return err;
@@ -155,16 +128,11 @@ MojErr MojLunaService::addCategory(const MojChar* name, CategoryHandler* handler
 
 	MojLunaErr lserr;
     bool retVal;
-    if (m_service) {
-    	retVal = LSPalmServiceRegisterCategory(m_service, name, lsMethods, lsMethods, NULL, cat.get(), lserr);
+    	MojAssert(m_service);
+    	retVal = LSRegisterCategory(m_service, name, lsMethods, NULL, NULL, lserr);
     	MojLsErrCheck(retVal, lserr);
-    } else {
-    	MojAssert(m_handle);
-    	retVal = LSRegisterCategory(m_handle, name, lsMethods, NULL, NULL, lserr);
-    	MojLsErrCheck(retVal, lserr);
-        retVal = LSCategorySetData(m_handle, name, cat.get(), lserr);
+        retVal = LSCategorySetData(m_service, name, cat.get(), lserr);
         MojLsErrCheck(retVal, lserr);
-    }
 
 	MojString categoryStr;
 	err = categoryStr.assign(name);
@@ -201,48 +169,51 @@ MojErr MojLunaService::createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut
 	return MojErrNone;
 }
 
-MojErr MojLunaService::createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, bool onPublic)
-{
-    LOG_TRACE("Entering function %s", __FUNCTION__);
-
-	reqOut.reset(new MojLunaRequest(this, onPublic));
-	MojAllocCheck(reqOut.get());
-
-	return MojErrNone;
-}
-
 MojErr MojLunaService::createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, const MojString& proxyRequester)
 {
-	return createRequest(reqOut, false, proxyRequester);
-}
-
-MojErr MojLunaService::createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, bool onPublic, const MojString& proxyRequester)
-{
     LOG_TRACE("Entering function %s", __FUNCTION__);
 
-	reqOut.reset(new MojLunaRequest(this, onPublic, proxyRequester));
+	reqOut.reset(new MojLunaRequest(this, proxyRequester));
 	MojAllocCheck(reqOut.get());
 
 	return MojErrNone;
 }
+
 
 MojErr MojLunaService::createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, const char *proxyRequester)
 {
-	return createRequest(reqOut, false, proxyRequester);
+    LOG_TRACE("Entering function %s", __FUNCTION__);
+
+    MojString proxyRequesterString;
+    MojErr err = proxyRequesterString.assign(proxyRequester);
+    MojErrCheck(err);
+
+    reqOut.reset(new MojLunaRequest(this, proxyRequesterString));
+    MojAllocCheck(reqOut.get());
+
+    return MojErrNone;
 }
 
-MojErr MojLunaService::createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, bool onPublic, const char *proxyRequester)
+MojErr MojLunaService::createRequest(MojRefCountedPtr<MojServiceRequest>& reqOut, const char *originExe, const char *originId, const char *originName)
 {
     LOG_TRACE("Entering function %s", __FUNCTION__);
 
-	MojString proxyRequesterString;
-	MojErr err = proxyRequesterString.assign(proxyRequester);
-	MojErrCheck(err);
+    MojString originExeString;
+    MojErr err = originExeString.assign(originExe);
+    MojErrCheck(err);
 
-	reqOut.reset(new MojLunaRequest(this, onPublic, proxyRequesterString));
-	MojAllocCheck(reqOut.get());
+    MojString originIdString;
+    err = originIdString.assign(originId);
+    MojErrCheck(err);
 
-	return MojErrNone;
+    MojString originNameString;
+    err = originNameString.assign(originName);
+    MojErrCheck(err);
+
+    reqOut.reset(new MojLunaRequest(this, originExeString, originIdString, originNameString));
+    MojAllocCheck(reqOut.get());
+
+    return MojErrNone;
 }
 
 MojErr MojLunaService::attach(GMainLoop* loop)
@@ -252,20 +223,15 @@ MojErr MojLunaService::attach(GMainLoop* loop)
 
 	MojLunaErr lserr;
 	bool retVal;
-	if (m_service) {
-		retVal= LSGmainAttachPalmService(m_service, loop, lserr);
-		MojLsErrCheck(retVal, lserr);
-	} else {
-		MojAssert(m_handle);
-		retVal= LSGmainAttach(m_handle, loop, lserr);
-		MojLsErrCheck(retVal, lserr);
-	}
+	MojAssert(m_service);
+	retVal= LSGmainAttach(m_service, loop, lserr);
+	MojLsErrCheck(retVal, lserr);
 	m_loop = loop;
 
 	return MojErrNone;
 }
 
-LSPalmService* MojLunaService::getService()
+LSHandle* MojLunaService::getService()
 {
 	return m_service;
 }
@@ -280,26 +246,12 @@ void MojLunaService::connectIdleTimeoutSignal(IdleTimeoutSignal::SlotRef slot)
     m_idleTimeoutSignal.connect(slot);
 }
 
-LSHandle* MojLunaService::getHandle(bool onPublic)
-{
-	LSHandle* handle;
-	if (m_service) {
-		if (onPublic) {
-			handle = LSPalmServiceGetPublicConnection(m_service);
-		} else {
-			handle = LSPalmServiceGetPrivateConnection(m_service);
-		}
-	} else {
-		handle = m_handle;
-	}
-	return handle;
-}
 
 MojErr MojLunaService::sendImpl(MojServiceRequest* req, const MojChar* service, const MojChar* method, Token& tokenOut)
 {
     LOG_TRACE("Entering function %s", __FUNCTION__);
 	MojAssert(req && service && method);
-	MojAssert(m_service || m_handle);
+	MojAssert(m_service);
 	MojAssertMutexLocked(m_mutex);
 
 	MojLunaRequest* lunaReq = static_cast<MojLunaRequest*>(req);
@@ -312,19 +264,37 @@ MojErr MojLunaService::sendImpl(MojServiceRequest* req, const MojChar* service, 
 
 	MojLunaErr lserr;
 	LSMessageToken lsToken;
-	LSHandle* handle = getHandle(lunaReq->onPublic());
+	LSHandle* handle = getHandle();
 	if (req->numRepliesExpected() > 1) {
+
+		// If proxy requester is present means this is an Call from Application
 		if (!lunaReq->isProxyRequest()) {
-			bool retVal = LSCall(handle, uri, json, &handleResponse, this, &lsToken, lserr);
-			MojLsErrCheck(retVal, lserr);
+
+			// If origin name is present means this is an Indirect luna call
+			if (!lunaReq->isOriginRequest()) {
+				bool retVal = LSCall(handle, uri, json, &handleResponse, this, &lsToken, lserr);
+				MojLsErrCheck(retVal, lserr);
+			}
+			else{  
+				bool retVal = LSCallProxy(handle, lunaReq->getOriginExe(), lunaReq->getOriginId(), lunaReq->getOriginName(), uri, json, &handleResponse, this, &lsToken, lserr);
+				MojLsErrCheck(retVal, lserr);
+			}
 		} else {
 			bool retVal = LSCallFromApplication(handle, uri, json, lunaReq->getRequester(), &handleResponse, this, &lsToken, lserr);
 			MojLsErrCheck(retVal, lserr);
 		}
 	} else {
 		if (!lunaReq->isProxyRequest()) {
-			bool retVal = LSCallOneReply(handle, uri, json, &handleResponse, this, &lsToken, lserr);
-			MojLsErrCheck(retVal, lserr);
+
+			// If origin name is present means this is an Indirect luna call
+			if (!lunaReq->isOriginRequest()) {
+				bool retVal = LSCallOneReply(handle, uri, json, &handleResponse, this, &lsToken, lserr);
+				MojLsErrCheck(retVal, lserr);
+			}
+			else{
+				bool retVal = LSCallProxyOneReply(handle, lunaReq->getOriginExe(), lunaReq->getOriginId(), lunaReq->getOriginName(), uri, json, &handleResponse, this, &lsToken, lserr);
+				MojLsErrCheck(retVal, lserr);
+			}
 		} else {
 			bool retVal = LSCallFromApplicationOneReply(handle, uri, json, lunaReq->getRequester(), &handleResponse, this, &lsToken, lserr);
 			MojLsErrCheck(retVal, lserr);
@@ -339,7 +309,7 @@ MojErr MojLunaService::cancelImpl(MojServiceRequest* req)
 {
     LOG_TRACE("Entering function %s", __FUNCTION__);
 	MojAssert(req);
-	MojAssert(m_service || m_handle);
+	MojAssert(m_service);
 	MojAssertMutexUnlocked(m_mutex);
 
 	MojLunaRequest* lunaReq = static_cast<MojLunaRequest*>(req);
@@ -347,7 +317,7 @@ MojErr MojLunaService::cancelImpl(MojServiceRequest* req)
 		LSMessageToken lsToken = (LSMessageToken) req->token();
 		MojAssert(lsToken != LSMESSAGE_TOKEN_INVALID);
 		MojLunaErr lserr;
-		LSHandle* handle = getHandle(lunaReq->onPublic());
+		LSHandle* handle = getHandle();
 		bool cancelled = LSCallCancel(handle, lsToken, lserr);
 		MojLsErrCheck(cancelled, lserr);
 		lunaReq->cancelled(true);

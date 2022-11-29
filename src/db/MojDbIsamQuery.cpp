@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -222,7 +222,7 @@ MojErr MojDbIsamQuery::getImpl(MojDbStorageItem*& itemOut, bool& foundOut, bool 
 			return MojErrNone;
 		}
 		else {
-			m_insertedIds.put(itemOut->id());
+			(void) m_insertedIds.put(itemOut->id());
 		}
 	}
 	if (foundOut) {
@@ -255,6 +255,7 @@ void MojDbIsamQuery::init()
 	m_keySize = 0;
 	m_keyData = NULL;
 	m_verify = false;
+	m_ignoreInactiveShards = false;
 }
 
 bool MojDbIsamQuery::match()

@@ -1,4 +1,4 @@
-# Copyright (c) 2014-2019 LG Electronics, Inc.
+# Copyright (c) 2019 LG Electronics, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,9 +14,15 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-description "Start/Stop all required db8 databases"
+# A userspace service that provides access to the openWebOS database
 
-start on (started db8-maindb and started db8-tempdb and started db8-mediadb)
-stop on (stopped db8-maindb and stopped db8-tempdb and stopped db8-mediadb)
+[Unit]
+Description=webos - "%n"
+Requires=local-fs.target
+After=local-fs.target
 
-#console output
+[Service]
+Type=oneshot
+ExecStart=/bin/mkdir -p /var/run/db8/mountpoints
+ExecStop=-/bin/rm -rf /var/run/db8
+RemainAfterExit=yes
