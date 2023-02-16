@@ -29,7 +29,6 @@ add_executable(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
                       mojocore
                       mojodb
-                      atomic
                       ${DB_BACKEND_LIB}
 )
 add_definitions(-DWEBOS_PERSISTENTSTORAGEDIR="${WEBOS_INSTALL_PERSISTENTSTORAGEDIR}")
