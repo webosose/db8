@@ -19,8 +19,7 @@
     "com.palm.db/cancelSearch",
     "com.palm.db/listActiveMedia",
     "com.palm.db/setShardMode",
-    "com.palm.db/shardInfo",
-    "com.palm.db/shardKind"
+    "com.palm.db/shardInfo"
     ],
     "database.profiling":[
     "com.palm.db/getProfile",
@@ -61,8 +60,7 @@
     "com.palm.tempdb/removeAppData",
     "com.palm.tempdb/listActiveMedia",
     "com.palm.tempdb/setShardMode",
-    "com.palm.tempdb/shardInfo",
-    "com.palm.tempdb/shardKind"
+    "com.palm.tempdb/shardInfo"
     ],
     "tempdatabase.profiling":[
     "com.palm.tempdb/getProfile",
@@ -101,8 +99,7 @@
     "com.webos.epgdb/removeAppData",
     "com.webos.epgdb/listActiveMedia",
     "com.webos.epgdb/setShardMode",
-    "com.webos.epgdb/shardInfo",
-    "com.webos.epgdb/shardKind"
+    "com.webos.epgdb/shardInfo"
     ],
     "epgdatabase.profiling":[
     "com.webos.epgdb/getProfile",
@@ -143,8 +140,7 @@
     "com.webos.mediadb/removeAppData",
     "com.webos.mediadb/listActiveMedia",
     "com.webos.mediadb/setShardMode",
-    "com.webos.mediadb/shardInfo",
-    "com.webos.mediadb/shardKind"
+    "com.webos.mediadb/shardInfo"
     ],
     "mediadatabase.profiling":[
     "com.webos.mediadb/get",

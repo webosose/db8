@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2019 LG Electronics, Inc.
+// Copyright (c) 2009-2023 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -85,7 +85,6 @@ public:
 	static const MojChar* const WindowKey;
 	static const MojChar* const ListActiveMediaKey;
 	static const MojChar* const ShardInfoKey;
-	static const MojChar* const ShardKindKey;
 	static const MojChar* const SetShardModeKey;
 	static const MojChar* const MediaKey;
 	static const MojChar* const TransientKey;
@@ -129,7 +128,6 @@ public:
 	static const MojChar* const WatchMethod;
 	static const MojChar* const ListActiveMediaMethod;
 	static const MojChar* const ShardInfoMethod;
-	static const MojChar* const ShardKindMethod;
 	static const MojChar* const SetShardModeMethod;
     static const MojChar* const ProfileMethod;
     static const MojChar* const GetProfileMethod;

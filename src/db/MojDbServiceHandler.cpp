@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2021 LG Electronics, Inc.
+// Copyright (c) 2009-2023 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -47,7 +47,6 @@ const MojDbServiceHandler::SchemaMethod MojDbServiceHandler::s_methods[] = {
 	{MojDbServiceDefs::WatchMethod, (Callback) &MojDbServiceHandler::handleWatch, MojDbServiceHandler::WatchSchema},
     {MojDbServiceDefs::ListActiveMediaMethod, (Callback) &MojDbServiceHandler::handleListActiveMedia, MojDbServiceHandler::ListActiveMediaSchema},
     {MojDbServiceDefs::ShardInfoMethod, (Callback) &MojDbServiceHandler::handleShardInfo, MojDbServiceHandler::ShardInfoSchema},
-    {MojDbServiceDefs::ShardKindMethod, (Callback) &MojDbServiceHandler::handleShardKind, MojDbServiceHandler::ShardKindSchema},
     {MojDbServiceDefs::SetShardModeMethod, (Callback) &MojDbServiceHandler::handleSetShardMode, MojDbServiceHandler::SetShardModeSchema},
     {MojDbServiceDefs::ProfileMethod, (Callback) &MojDbServiceHandler::handleProfile, MojDbServiceHandler::ProfileSchema},
     {MojDbServiceDefs::GetProfileMethod, (Callback) &MojDbServiceHandler::handleGetProfile, MojDbServiceHandler::GetProfileSchema},

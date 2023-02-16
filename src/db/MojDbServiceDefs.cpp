@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2019 LG Electronics, Inc.
+// Copyright (c) 2009-2023 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -81,7 +81,6 @@ const MojChar* const MojDbServiceDefs::WatchKey = _T("watch");
 const MojChar* const MojDbServiceDefs::WindowKey = _T("window");
 const MojChar* const MojDbServiceDefs::ListActiveMediaKey = _T("listActiveMedia");
 const MojChar* const MojDbServiceDefs::ShardInfoKey = _T("shardInfo");
-const MojChar* const MojDbServiceDefs::ShardKindKey = _T("shardKind");
 const MojChar* const MojDbServiceDefs::SetShardModeKey = _T("setShardMode");
 const MojChar* const MojDbServiceDefs::MediaKey = _T("media");
 const MojChar* const MojDbServiceDefs::TransientKey = _T("transient");
@@ -124,7 +123,6 @@ const MojChar* const MojDbServiceDefs::StatsMethod = _T("stats");
 const MojChar* const MojDbServiceDefs::WatchMethod = _T("watch");
 const MojChar* const MojDbServiceDefs::ListActiveMediaMethod = _T("listActiveMedia");
 const MojChar* const MojDbServiceDefs::ShardInfoMethod = _T("shardInfo");
-const MojChar* const MojDbServiceDefs::ShardKindMethod = _T("shardKind");
 const MojChar* const MojDbServiceDefs::SetShardModeMethod = _T("setShardMode");
 const MojChar* const MojDbServiceDefs::ProfileMethod = _T("profile");
 const MojChar* const MojDbServiceDefs::GetProfileMethod = _T("getProfile");
