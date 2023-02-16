@@ -342,7 +342,7 @@ inline MojErr MojThreadDetach(MojThreadT thread)
 inline MojErr MojThreadYield()
 {
 #ifdef __USE_GNU
-	return (MojErr) pthread_yield();
+	return (MojErr) sched_yield();
 #else
 	pthread_yield_np();
 	return MojErrNone;

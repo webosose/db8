@@ -38,6 +38,7 @@ target_link_libraries(gtest_dbclient_perf
                       mojocore
                       mojodb
                       mojoluna
+                      atomic
                       ${DB_BACKEND_LIB}
 )
 target_link_libraries(gtest_dbclient_perf ${WEBOS_GTEST_LIBRARIES})

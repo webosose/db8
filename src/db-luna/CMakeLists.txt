@@ -31,6 +31,7 @@ target_link_libraries(mojodb-luna
                       mojocore
                       mojodb
                       mojoluna
+                      atomic
                       ${DB_BACKEND_LIB}
                       ${LS2_LDFLAGS}
                       ${ICU}
