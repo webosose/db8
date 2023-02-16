@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2023 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-
+#include <cassert>
 #include "core/MojString.h"
 
 #define MojStringAssertValid()  MojAssert(m_begin && m_end && m_endAlloc); \
@@ -413,6 +413,7 @@ MojErr MojString::base64Decode(MojVector<MojByte>& vecOut) const
 
 void MojString::init(const MojString& str)
 {
+	assert(str);
 	if (str.empty()) {
 		init(s_emptyString, s_emptyString, s_emptyString);
 	} else {
