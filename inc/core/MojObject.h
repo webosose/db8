@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2023 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -185,6 +185,7 @@ private:
 		virtual MojSize hashCode() const;
 		virtual MojErr visit(MojObjectVisitor& visitor) const;
 		virtual MojSize objectSize() const { return sizeof(NullImpl); }
+		inline virtual ~NullImpl(){}
 	};
 	class UndefinedImpl : public NullImpl
 	{

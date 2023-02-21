@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2023 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ public:
 
 	MojVector() : m_begin(NULL), m_end(NULL), m_endAlloc(NULL) {}
 	MojVector(const MojVector& v);
-	~MojVector() { release(); }
+	inline ~MojVector() { release(); }
 
 	MojSize size() const { return end() - begin(); }
 	MojSize capacity() const { return m_endAlloc - begin(); }

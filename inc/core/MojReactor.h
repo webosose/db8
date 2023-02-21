@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2023 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ class MojReactor : private MojNoCopy
 public:
 	typedef MojSignal<MojSockT> SockSignal;
 
-	virtual ~MojReactor() {}
+	inline virtual ~MojReactor() {}
 	virtual MojErr init() = 0;
 	virtual MojErr run() = 0;
 	virtual MojErr stop() = 0;

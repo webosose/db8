@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2018 LG Electronics, Inc.
+// Copyright (c) 2009-2023 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ public:
 
 protected:
 	MojSlotBase();
-	~MojSlotBase();
+	virtual ~MojSlotBase();
 	void disconnect();
 
 private:
@@ -76,6 +76,7 @@ class MojSlotBase1 : public MojSlotBase
 {
 public:
 	virtual MojErr invoke(TARG1) = 0;
+	inline ~MojSlotBase1() {}
 };
 
 template <class TARG1, class TARG2>
@@ -191,6 +192,7 @@ public:
 	void connect(SlotRef ref) { MojSignalBase::connect(&ref); }
 	MojErr call();
 	MojErr fire();
+	inline  ~MojSignal0() {}
 };
 
 template <class TARG1>
