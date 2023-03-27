@@ -110,7 +110,7 @@ include(${CMAKE_SOURCE_DIR}/src/db-luna/BackendBuildRules.cmake)
 webos_build_pkgconfig(files/pkgconfig/mojodb)
 webos_build_pkgconfig(files/pkgconfig/db8)
 
-webos_add_compiler_flags(ALL -Wall -Wextra -fPIC -Wconversion --std=c++0x
+webos_add_compiler_flags(ALL -Wall -Wextra -fPIC -Wconversion -std=c++14
                          -Wno-unused-but-set-variable -Wno-unused-variable
                          -fno-exceptions -frename-registers -DMOJ_LINUX -fno-strict-aliasing
                          -Wno-psabi

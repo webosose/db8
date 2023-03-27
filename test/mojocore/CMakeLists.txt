@@ -19,7 +19,7 @@ project(gtest_mojocore C CXX)
 
 include_directories(${WEBOS_GTEST_INCLUDES})
 
-add_definitions(-Wall -std=c++0x -Wno-deprecated -pthread)
+add_definitions(-Wall -std=c++14 -Wno-deprecated -pthread)
 
 add_executable(${PROJECT_NAME}
                Runner.cpp

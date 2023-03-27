@@ -19,7 +19,7 @@ project(gtest_sandwich CXX)
 
 include_directories(${WEBOS_GTEST_INCLUDES})
 
-add_definitions(-Wall -Wno-deprecated -pthread --std=c++0x)
+add_definitions(-Wall -Wno-deprecated -pthread -std=c++14)
 
 foreach(filename ${DB_BACKEND_WRAPPER_SOURCES})
     set(DB_BACKEND_WRAPPER_SOURCES_CPP ${DB_BACKEND_WRAPPER_SOURCES_CPP} "${CMAKE_SOURCE_DIR}/${filename}")
