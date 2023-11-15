@@ -578,7 +578,7 @@ void MojLunaService::Statistic(LSMessage* message)
         sprintf(path, "/var/db/db8-luna-statistic-%d.txt", pid);
 
         file = fopen(path, "w");
-        for(auto it : m_bytes)
+        for(const auto& it : m_bytes)
         {
             fputs("Service: ", file);
             fputs(it.first.c_str(), file);
